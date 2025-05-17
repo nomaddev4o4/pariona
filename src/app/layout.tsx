@@ -1,15 +1,25 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import localFont from "next/font/local";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const switzer = localFont({
+  src: "./fonts/Switzer-Variable.woff2",
+  variable: "--font-switzer",
+  fallback: [
+    "Inter",
+    "-apple-system",
+    "BlinkMacSystemFont",
+    "Segoe UI",
+    "Roboto",
+    "Helvetica Neue",
+    "Arial",
+    "sans-serif",
+  ],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const cabinetGrotesk = localFont({
+  src: "./fonts/CabinetGrotesk-Variable.woff2",
+  variable: "--font-cabinet-grotesk",
 });
 
 export const metadata: Metadata = {
@@ -25,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${switzer.variable} ${cabinetGrotesk.variable} antialiased`}
       >
         {children}
       </body>
