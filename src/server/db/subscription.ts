@@ -1,21 +1,24 @@
 import { db } from "@/db";
-import { ProductTable, UserSubscriptionTable } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { UserSubscriptionTable } from "@/db/schema";
+import { CACHE_TAGS, revalidateDbCache } from "@/lib/cache";
 
-export function createUserSubscription(
+export async function createUserSubscription(
   data: typeof UserSubscriptionTable.$inferInsert
 ) {
-  return db
+  const [newSubscription] = await db
     .insert(UserSubscriptionTable)
     .values(data)
-    .onConflictDoNothing({ target: UserSubscriptionTable.clerkUserId });
-}
+    .onConflictDoNothing({ target: UserSubscriptionTable.clerkUserId })
+    .returning({
+      id: UserSubscriptionTable.id,
+      userId: UserSubscriptionTable.clerkUserId,
+    });
 
-export function deleteUser(clerkUserId: string) {
-  return db.batch([
-    db
-      .delete(UserSubscriptionTable)
-      .where(eq(UserSubscriptionTable.clerkUserId, clerkUserId)),
-    db.delete(ProductTable).where(eq(ProductTable.clerkUserId, clerkUserId)),
-  ]);
+  if (newSubscription !== null) {
+    revalidateDbCache({
+      tag: CACHE_TAGS.subscription,
+      id: newSubscription.id,
+      userId: newSubscription.userId,
+    });
+  }
 }

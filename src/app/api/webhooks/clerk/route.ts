@@ -1,4 +1,5 @@
-import { createUserSubscription, deleteUser } from "@/server/db/subscription";
+import { createUserSubscription } from "@/server/db/subscription";
+import { deleteUser } from "@/server/db/users";
 import { verifyWebhook } from "@clerk/nextjs/webhooks";
 import { NextRequest } from "next/server";
 
