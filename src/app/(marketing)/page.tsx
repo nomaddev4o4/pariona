@@ -22,13 +22,12 @@ export default function Home() {
     <>
       <section className="min-h-screen bg-[radial-gradient(circle_at_center,hsl(0,72%,65%,0.4)_0%,hsl(24,62%,73%,0.4)_50%,var(--background)_70%)] flex items-center justify-center text-center text-balance flex-col gap-8 px-4">
         <div className="font-brand">
-          <h1 className="text-6xl lg:text-7xl xl:text-8xl font-bold">
-            Pariona
-          </h1>
+          <h1 className="text-6xl lg:text-7xl xl:text-8xl">Pariona</h1>
           <p className="text-2xl font-medium">Price Smarter, Sell bigger!</p>
         </div>
         <p className="text-lg text-muted-foreground">
-          Optimize your product pricing across countries to maximize sales.
+          Optimize your product pricing across countries to maximize sales.{" "}
+          <br />
           Capture 85% of the untapped market with location-based dynamic pricing
         </p>
 
@@ -122,6 +121,17 @@ export default function Home() {
               ]}
             />
           </div>
+          <FooterLinkGroup
+            title="Tutorials"
+            links={[
+              { label: "Any Website", href: "#" },
+              { label: "Lemon Squeezy", href: "#" },
+              { label: "Gumroad", href: "#" },
+              { label: "Stripe", href: "#" },
+              { label: "Chargebee", href: "#" },
+              { label: "Paddle", href: "#" },
+            ]}
+          />
         </div>
       </footer>
     </>
