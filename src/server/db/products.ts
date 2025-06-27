@@ -12,7 +12,7 @@ export function getProducts(userId: string, { limit }: { limit?: number }) {
   const cacheFn = dbCache(getProductsInternal, {
     tags: [getUserTag(userId, CACHE_TAGS.products)],
   });
-
+  console.log(cacheFn);
   return cacheFn(userId, { limit });
 }
 
@@ -69,8 +69,7 @@ export function getProductsInternal(
   { limit }: { limit?: number }
 ) {
   return db.query.ProductTable.findMany({
-    where: ({ clerkUserId: clerkUserIdCol }, { eq }) =>
-      eq(clerkUserIdCol, userId),
+    where: ({ clerkUserId }, { eq }) => eq(clerkUserId, userId),
     orderBy: ({ createdAt }, { desc }) => desc(createdAt),
     limit,
   });
