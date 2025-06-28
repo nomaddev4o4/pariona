@@ -18,21 +18,35 @@ import {
   productDetailsSchema,
   TProductDetailsSchema,
 } from "@/schemas/products";
-import { createProduct } from "@/server/actions/products";
+import { createProduct, updateProduct } from "@/server/actions/products";
 import { toast } from "sonner";
 
-export default function ProductDetailsForm() {
+export default function ProductDetailsForm({
+  product,
+}: {
+  product?: {
+    id: string;
+    name: string;
+    description: string | null;
+    url: string;
+  };
+}) {
   const form = useForm<TProductDetailsSchema>({
     resolver: zodResolver(productDetailsSchema),
-    defaultValues: {
-      name: "",
-      url: "",
-      description: "",
-    },
+    defaultValues: product
+      ? { ...product, description: product?.description ?? "" }
+      : {
+          name: "",
+          url: "",
+          description: "",
+        },
   });
 
   async function onSubmit(values: TProductDetailsSchema) {
-    const data = await createProduct(values);
+    const action =
+      product == null ? createProduct : updateProduct.bind(null, product.id);
+
+    const data = await action(values);
 
     if (data?.message) {
       toast[data.error ? "error" : "success"](
