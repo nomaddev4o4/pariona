@@ -1,3 +1,4 @@
+import { CountryDiscountsForm } from "@/app/dashboard/_components/forms/CountryDiscountsForm";
 import ProductDetailsForm from "@/app/dashboard/_components/forms/ProductDetailsForm";
 import { PageWithBackButton } from "@/app/dashboard/_components/PageWithBackButton";
 import {
@@ -8,17 +9,20 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getProduct } from "@/server/db/products";
+import { getProduct, getProductCountryGroups } from "@/server/db/products";
 import { auth } from "@clerk/nextjs/server";
 import { notFound } from "next/navigation";
 
 export default async function EditProductPage({
-  params: { productId },
-  searchParams: { tab = "details" },
+  params,
+  searchParams,
 }: {
-  params: { productId: string };
-  searchParams: { tab?: string };
+  params: Promise<{ productId: string }>;
+  searchParams: Promise<{ tab?: string }>;
 }) {
+  const { productId } = await params;
+  const { tab = "details" } = await searchParams;
+
   const { userId, redirectToSignIn } = await auth();
 
   if (userId === null) return redirectToSignIn();
@@ -80,10 +84,10 @@ async function CountryTab({
   productId: string;
   userId: string;
 }) {
-  // const countryGroups = await getProductCountryGroups({
-  //   productId,
-  //   userId,
-  // });
+  const countryGroups = await getProductCountryGroups({
+    productId,
+    userId,
+  });
 
   return (
     <Card>
@@ -95,10 +99,10 @@ async function CountryTab({
         </CardDescription>
       </CardHeader>
       <CardContent>
-        {/* <CountryDiscountsForm
-        productId={productId}
-        countryGroups={countryGroups}
-      /> */}
+        <CountryDiscountsForm
+          productId={productId}
+          countryGroups={countryGroups}
+        />
       </CardContent>
     </Card>
   );
