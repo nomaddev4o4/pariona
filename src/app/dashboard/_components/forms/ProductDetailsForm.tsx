@@ -20,6 +20,7 @@ import {
 } from "@/schemas/products";
 import { createProduct, updateProduct } from "@/server/actions/products";
 import { toast } from "sonner";
+import RequiredLabelIcon from "@/components/RequiredLabelIcon";
 
 export default function ProductDetailsForm({
   product,
@@ -70,7 +71,10 @@ export default function ProductDetailsForm({
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Product Name</FormLabel>
+                <FormLabel>
+                  Product Name
+                  <RequiredLabelIcon />
+                </FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
@@ -83,7 +87,10 @@ export default function ProductDetailsForm({
             name="url"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Enter your website URL</FormLabel>
+                <FormLabel>
+                  Enter your website URL
+                  <RequiredLabelIcon />
+                </FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>

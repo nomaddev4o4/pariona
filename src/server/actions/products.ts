@@ -2,8 +2,10 @@
 
 import {
   productCountryDiscountSchema,
+  productCustomizationSchema,
   productDetailsSchema,
   TProductCountryDiscountSchema,
+  TProductCustomizationSchema,
   TProductDetailsSchema,
 } from "@/schemas/products";
 import { auth } from "@clerk/nextjs/server";
@@ -12,16 +14,19 @@ import {
   deleteProduct as deleteProductDb,
   updateProduct as updateProductDb,
   updateCountryDiscounts as updateCountryDiscountsDb,
+  updateProductCustomization as updateProductCustomizationDb,
 } from "@/server/db/products";
 import { redirect } from "next/navigation";
+import { canCreateProduct, canCustomizeBanner } from "../permissions";
 
 export async function createProduct(
   unsafeData: TProductDetailsSchema
 ): Promise<{ error: boolean; message: string } | undefined> {
   const { userId } = await auth();
   const { success, data } = productDetailsSchema.safeParse(unsafeData);
+  const canCreate = await canCreateProduct(userId);
 
-  if (!success || userId === null) {
+  if (!success || userId === null || !canCreate) {
     return {
       error: true,
       message: "There was an error creating your product",
@@ -119,4 +124,27 @@ export async function updateCountryDiscounts(
   await updateCountryDiscountsDb(deleteIds, insert, { productId: id, userId });
 
   return { error: false, message: "Country discounts saved" };
+}
+
+export async function updateProductCustomization(
+  id: string,
+  unsafeData: TProductCustomizationSchema
+) {
+  const { userId } = await auth();
+  const { success, data } = productCustomizationSchema.safeParse(unsafeData);
+  const canCustomize = await canCustomizeBanner(userId);
+
+  if (!success || userId === null || !canCustomize) {
+    return {
+      error: true,
+      message: "There was an error saving country discounts",
+    };
+  }
+
+  await updateProductCustomizationDb(data, {
+    productId: id,
+    userId,
+  });
+
+  return { error: false, message: "Banner updated" };
 }
