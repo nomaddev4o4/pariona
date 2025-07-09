@@ -14,7 +14,7 @@ export default function NavBar() {
       <div className="flex items-center gap-10 font-semibolds">
         <Link href="/dashboard/products">Products</Link>
         <Link href="/dashboard/analytics">Analytics</Link>
-        <Link href="/dashboard/subscriptions">Subscriptions</Link>
+        <Link href="/dashboard/subscription">Subscription</Link>
         <UserButton />
       </div>
 
