@@ -1,7 +1,14 @@
-import { createUserSubscription } from "@/server/db/subscription";
+import { env } from "@/data/env/server";
+import {
+  createUserSubscription,
+  getUserSubscription,
+} from "@/server/db/subscription";
 import { deleteUser } from "@/server/db/users";
 import { verifyWebhook } from "@clerk/nextjs/webhooks";
 import { NextRequest } from "next/server";
+import Stripe from "stripe";
+
+const stripe = new Stripe(env.STRIPE_SECRET_KEY);
 
 export async function POST(req: NextRequest) {
   try {
@@ -23,8 +30,13 @@ export async function POST(req: NextRequest) {
 
       case "user.deleted": {
         if (id) {
+          const userSubscription = await getUserSubscription(id);
+          if (userSubscription?.stripeSubscriptionId != null) {
+            await stripe.subscriptions.cancel(
+              userSubscription?.stripeSubscriptionId
+            );
+          }
           await deleteUser(id);
-          // TODO: Remove stripe subscription
         }
       }
     }

@@ -15,6 +15,11 @@ import {
   TierNames,
 } from "@/data/subscription-tiers";
 import { cn } from "@/lib/utils";
+import {
+  createCancelSession,
+  createCheckoutSession,
+  createCustomerPortalSession,
+} from "@/server/actions/stripe";
 import { getProductCount } from "@/server/db/products";
 import { getProductViewCount } from "@/server/db/productViews";
 import { getUserSubscriptionTier } from "@/server/db/subscription";
@@ -69,7 +74,7 @@ export default async function SubscriptionPage() {
             </CardContent>
           </Card>
         </div>
-        {tier == subscriptionTiers.Free && (
+        {tier != subscriptionTiers.Free && (
           <Card>
             <CardHeader>
               <CardTitle>You are currently on the {tier.name} plan</CardTitle>
@@ -79,7 +84,7 @@ export default async function SubscriptionPage() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <form>
+              <form action={createCustomerPortalSession}>
                 <Button
                   variant="accent"
                   className="text-lg rounded-lg"
@@ -127,11 +132,11 @@ function PricingCard({
 
       <CardContent>
         <form
-        // action={
-        //   name === "Free"
-        //     ? createCancelSession
-        //     : createCheckoutSession.bind(null, name)
-        // }
+          action={
+            name === "Free"
+              ? createCancelSession
+              : createCheckoutSession.bind(null, name)
+          }
         >
           <Button>{isCurrent ? "Current" : "Swap"}</Button>
         </form>
