@@ -45,7 +45,7 @@ export default async function EditProductPage({
       <Tabs defaultValue={tab}>
         <TabsList className="bg-background/60">
           <TabsTrigger value="details">Details</TabsTrigger>
-          <TabsTrigger value="country">Country</TabsTrigger>
+          <TabsTrigger value="countries">Country</TabsTrigger>
           <TabsTrigger value="customization">Customization</TabsTrigger>
         </TabsList>
 
