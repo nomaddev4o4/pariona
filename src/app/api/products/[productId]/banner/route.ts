@@ -4,7 +4,7 @@ import { NextRequest } from "next/server";
 import { geolocation } from "@vercel/functions";
 import { env } from "@/data/env/server";
 import { getProductForBanner } from "@/server/db/products";
-import { createProducView } from "@/server/db/productViews";
+import { createProductView } from "@/server/db/productViews";
 import { canRemoveBranding, canShowDiscountBanner } from "@/server/permissions";
 import { createElement } from "react";
 import Banner from "@/components/Banner";
@@ -30,7 +30,7 @@ export async function GET(
 
   const canShowBanner = await canShowDiscountBanner(product.clerkUserId);
 
-  await createProducView({
+  await createProductView({
     productId: product.id,
     countryId: country?.id,
     userId: product.clerkUserId,

@@ -111,7 +111,7 @@ export function getViewsByDayChartData({
   });
 }
 
-export async function createProducView({
+export async function createProductView({
   productId,
   countryId,
   userId,

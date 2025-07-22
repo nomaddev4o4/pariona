@@ -53,7 +53,7 @@ export default function Banner({
             color: inherit;
             font-size: inherit;
             display: inline-block;
-            text-decoration: udnerline;
+            text-decoration: underline;
           }
         `}
       </style>
