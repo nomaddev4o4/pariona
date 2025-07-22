@@ -52,7 +52,7 @@ export default async function EditProductPage({
         <TabsContent value="details">
           <DetailsTab product={product} />
         </TabsContent>
-        <TabsContent value="country">
+        <TabsContent value="countries">
           <CountryTab productId={productId} userId={userId} />
         </TabsContent>
         <TabsContent value="customization">
