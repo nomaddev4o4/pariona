@@ -252,6 +252,6 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-**Built with ❤️ by Krishna as a demonstration of modern full-stack development capabilities.**
+**Built with ❤️ by nomaddev4o4 as a demonstration of modern full-stack development capabilities.**
 
 *This application showcases proficiency in React, Next.js, TypeScript, PostgreSQL, Stripe integration, real-time analytics, and modern web development best practices.*
