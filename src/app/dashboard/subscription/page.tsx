@@ -63,8 +63,7 @@ export default async function SubscriptionPage() {
             <CardHeader>
               <CardTitle className="text-lg">Number of Products</CardTitle>
               <CardDescription>
-                {productCount} / {tier.maxNumberOfProducts}
-                product created
+                {productCount} / {tier.maxNumberOfProducts} product created
               </CardDescription>
             </CardHeader>
             <CardContent>

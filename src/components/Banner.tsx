@@ -41,12 +41,13 @@ export default function Banner({
             font-size: ${customization.fontSize};
             font-family: inherit;
             padding: 1rem;
-            ${customization.isSticky ? "position: sticky" : ""}
+            ${customization.isSticky ? "position: sticky" : ""};
             left: 0;
             right: 0;
             top: 0;
             text-wrap: balance;
             text-align: center;
+            z-index: 1000;
           }
 
           .${prefix}easy-ppp-message {

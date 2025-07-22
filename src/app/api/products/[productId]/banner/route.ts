@@ -20,6 +20,12 @@ export async function GET(
   const countryCode = getCountryCode(request);
   if (countryCode == null) return notFound();
 
+  console.log("--------------------------------");
+  console.log("productId", productId);
+  console.log("requestingUrl", requestingUrl);
+  console.log("countryCode", countryCode);
+  console.log("--------------------------------");
+
   const { product, country, discount } = await getProductForBanner({
     id: productId,
     countryCode,
@@ -29,7 +35,6 @@ export async function GET(
   if (product == null) return notFound();
 
   const canShowBanner = await canShowDiscountBanner(product.clerkUserId);
-
   await createProductView({
     productId: product.id,
     countryId: country?.id,
