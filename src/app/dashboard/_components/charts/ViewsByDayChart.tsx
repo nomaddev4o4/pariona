@@ -30,7 +30,7 @@ export default function ViewsByDayChart({
 
   return (
     <ChartContainer
-      config={chartData}
+      config={chartConfig}
       className="min-h-[150px] max-h-[250px] w-full"
     >
       <BarChart accessibilityLayer data={chartData}>

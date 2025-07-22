@@ -10,18 +10,22 @@ import { redirect } from "next/navigation";
 
 const stripe = new Stripe(serverEnv.STRIPE_SECRET_KEY);
 
-export async function createCancelSession() {
+export async function createCancelSession(): Promise<void> {
   const user = await currentUser();
-  if (user == null) return { error: true };
+  if (user == null) {
+    throw new Error("Unauthorized");
+  }
 
   const subscription = await getUserSubscription(user.id);
-  if (subscription == null) return { error: true };
+  if (subscription == null) {
+    throw new Error("No subscription found");
+  }
 
   if (
     subscription.stripeCustomerId == null ||
     subscription.stripeSubscriptionId == null
   ) {
-    return new Response(null, { status: 500 });
+    throw new Error("Invalid subscription");
   }
 
   const portalSession = await stripe.billingPortal.sessions.create({
@@ -38,14 +42,16 @@ export async function createCancelSession() {
   redirect(portalSession.url);
 }
 
-export async function createCustomerPortalSession() {
+export async function createCustomerPortalSession(): Promise<void> {
   const { userId } = await auth();
-  if (userId == null) return { error: true };
+  if (userId == null) {
+    throw new Error("Unauthorized");
+  }
 
   const subscription = await getUserSubscription(userId);
 
   if (subscription?.stripeCustomerId == null) {
-    return { error: true };
+    throw new Error("No customer found");
   }
 
   const portalSession = await stripe.billingPortal.sessions.create({
@@ -56,16 +62,22 @@ export async function createCustomerPortalSession() {
   redirect(portalSession.url);
 }
 
-export async function createCheckoutSession(tier: PaidTierNames) {
+export async function createCheckoutSession(tier: PaidTierNames): Promise<void> {
   const user = await currentUser();
-  if (user == null) return { error: true };
+  if (user == null) {
+    throw new Error("Unauthorized");
+  }
 
   const subscription = await getUserSubscription(user.id);
-  if (subscription == null) return { error: true };
+  if (subscription == null) {
+    throw new Error("No subscription found");
+  }
 
   if (subscription.stripeCustomerId == null) {
     const url = await getCheckoutSession(tier, user);
-    if (url == null) return { error: true };
+    if (url == null) {
+      throw new Error("Failed to create checkout session");
+    }
 
     redirect(url);
   } else {

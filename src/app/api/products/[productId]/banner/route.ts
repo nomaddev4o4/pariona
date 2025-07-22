@@ -36,9 +36,9 @@ export async function GET(
     userId: product.clerkUserId,
   });
 
-  console.log(country);
   if (!canShowBanner) return notFound();
   if (country == null) return notFound();
+  if (discount == null) return notFound();
 
   return new Response(
     await getJavascript(

@@ -35,10 +35,10 @@ export default function ViewsByPPPChart({
 
   return (
     <ChartContainer
-      config={data}
+      config={chartConfig}
       className="min-h-[150px] max-h-[250px] w-full"
     >
-      <BarChart accessibilityLayer data={chartData}>
+      <BarChart accessibilityLayer data={data}>
         <XAxis dataKey="pppName" tickLine={false} tickMargin={10} />
         <YAxis
           tickLine={false}
