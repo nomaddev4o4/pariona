@@ -20,12 +20,6 @@ export async function GET(
   const countryCode = getCountryCode(request);
   if (countryCode == null) return notFound();
 
-  console.log("--------------------------------");
-  console.log("productId", productId);
-  console.log("requestingUrl", requestingUrl);
-  console.log("countryCode", countryCode);
-  console.log("--------------------------------");
-
   const { product, country, discount } = await getProductForBanner({
     id: productId,
     countryCode,
@@ -52,7 +46,15 @@ export async function GET(
       discount,
       await canRemoveBranding(product.clerkUserId)
     ),
-    { headers: { "content-type": "application/javascript" } }
+    {
+      headers: {
+        "content-type": "application/javascript",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Cache-Control": "public, max-age=3600",
+      },
+    }
   );
 }
 
