@@ -18,15 +18,15 @@ export default function NoPermissionCard({
     <Card>
       <CardHeader>
         <CardTitle className="text-xl">Permission Denied</CardTitle>
-        <CardContent>
-          <CardDescription>{children}</CardDescription>
-        </CardContent>
-        <CardFooter>
-          <Button asChild>
-            <Link href="/dashboard/subscription">Upgrade Plan</Link>
-          </Button>
-        </CardFooter>
       </CardHeader>
+      <CardContent>
+        <CardDescription>{children}</CardDescription>
+      </CardContent>
+      <CardFooter>
+        <Button asChild>
+          <Link href="/dashboard/subscription">Upgrade Plan</Link>
+        </Button>
+      </CardFooter>
     </Card>
   );
 }
