@@ -71,7 +71,7 @@ export default function Banner({
             href={`${prefix}easy-ppp-branding`}
             className={`${prefix}easy-ppp-branding`}
           >
-            Powered by Easy PPP
+            Powered by Pariona
           </a>
         )}
       </div>
