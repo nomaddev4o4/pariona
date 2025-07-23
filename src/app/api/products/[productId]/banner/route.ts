@@ -46,15 +46,7 @@ export async function GET(
       discount,
       await canRemoveBranding(product.clerkUserId)
     ),
-    {
-      headers: {
-        "content-type": "application/javascript",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET",
-        "Access-Control-Allow-Headers": "Content-Type",
-        "Cache-Control": "public, max-age=3600",
-      },
-    }
+    { headers: { "content-type": "application/javascript" } }
   );
 }
 
